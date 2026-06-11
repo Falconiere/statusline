@@ -1,0 +1,59 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shellcheck:
+    name: shellcheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run shellcheck
+        run: |
+          set -euo pipefail
+          sudo apt-get update -y
+          sudo apt-get install -y shellcheck
+          shellcheck --version
+          # SC2034: statusline.sh defines a full ANSI color palette; some
+          # colors are intentionally unused. Not a real defect.
+          shellcheck -e SC2034 statusline.sh install.sh
+
+  bats:
+    name: bats (real-data)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install bats and jq
+        run: |
+          set -euo pipefail
+          sudo apt-get update -y
+          sudo apt-get install -y bats jq
+
+      - name: Confirm tooling
+        run: |
+          bats --version
+          jq --version
+
+      - name: Run bats suite
+        run: |
+          set -euo pipefail
+          mapfile -d '' suites < <(find tests -name "*.bats" -print0)
+          if [ "${#suites[@]}" -eq 0 ]; then
+            echo "No bats suites found — test discovery is broken" >&2
+            exit 1
+          fi
+          bats "${suites[@]}"
