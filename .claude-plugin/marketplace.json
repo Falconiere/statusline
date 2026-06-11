@@ -1,0 +1,14 @@
+{
+  "name": "falconiere-statusline",
+  "owner": {
+    "name": "Falconiere Barbosa",
+    "email": "hello@falconiere.io"
+  },
+  "plugins": [
+    {
+      "name": "statusline",
+      "source": "./",
+      "description": "Self-contained Claude Code statusline with a setup command."
+    }
+  ]
+}

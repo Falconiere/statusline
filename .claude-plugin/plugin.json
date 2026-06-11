@@ -1,0 +1,13 @@
+{
+  "name": "statusline",
+  "description": "Self-contained Claude Code statusline: model, org, effort, context, folder, git branch, caveman mode.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Falconiere Barbosa",
+    "email": "hello@falconiere.io"
+  },
+  "homepage": "https://github.com/Falconiere/statusline",
+  "repository": "https://github.com/Falconiere/statusline",
+  "license": "MIT",
+  "keywords": ["statusline", "claude-code", "status-line"]
+}
