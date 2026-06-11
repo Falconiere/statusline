@@ -1,7 +1,7 @@
 {
   "name": "statusline",
   "description": "Self-contained Claude Code statusline: model, org, effort, context, folder, git branch, caveman mode.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": {
     "name": "Falconiere Barbosa",
     "email": "hello@falconiere.io"
