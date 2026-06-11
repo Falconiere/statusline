@@ -20,13 +20,18 @@ settings — no symlinks, no hand-editing absolute paths.
 ## Install (plugin — recommended)
 
 ```text
+/plugin marketplace add JuliusBrussee/caveman
 /plugin marketplace add Falconiere/statusline
 /plugin install statusline@falconiere-statusline
 /statusline:setup
 ```
 
-- `marketplace add` registers this repo as a plugin marketplace.
-- `install` adds the `statusline` plugin (bundles `statusline.sh`).
+- The first `marketplace add` registers the **caveman** marketplace. `statusline`
+  declares `caveman` as a dependency, so its marketplace must be known before
+  install (cross-marketplace dependencies are not auto-discovered).
+- The second `marketplace add` registers this repo as a plugin marketplace.
+- `install` adds the `statusline` plugin (bundles `statusline.sh`) and pulls in
+  `caveman@caveman` automatically.
 - `/statusline:setup` backs up `~/.claude/settings.json` (timestamped) and sets
   `.statusLine.command` to `bash ${CLAUDE_PLUGIN_ROOT}/statusline.sh`, where
   `${CLAUDE_PLUGIN_ROOT}` resolves to the installed plugin directory.
@@ -35,6 +40,15 @@ settings — no symlinks, no hand-editing absolute paths.
 > `/plugin marketplace add ...` then `/plugin install ...` as shown above.
 
 Restart Claude Code (or start a new session) after setup to see it.
+
+### Dependency: caveman
+
+`statusline` depends on the [caveman](https://github.com/JuliusBrussee/caveman)
+plugin (`dependencies` in `plugin.json`, allow-listed via
+`allowCrossMarketplaceDependenciesOn` in `marketplace.json`). Installing
+`statusline` auto-installs `caveman@caveman`; if caveman is missing or disabled,
+statusline reports `dependency-unsatisfied`. The `[CAVEMAN:<mode>]` segment then
+reflects caveman's active mode via its `$CLAUDE_CONFIG_DIR/.caveman-active` flag.
 
 ### Why a setup command instead of automatic wiring
 

@@ -4,6 +4,7 @@
     "name": "Falconiere Barbosa",
     "email": "hello@falconiere.io"
   },
+  "allowCrossMarketplaceDependenciesOn": ["caveman"],
   "plugins": [
     {
       "name": "statusline",
